@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nikhil Dasari | The Campus</title>
+  <meta name="description" content="Portfolio of Nikhil Dasari. Five monuments, five doors: work, resume, creator, about, contact.">
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@700,800&f[]=satoshi@400,500,700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* ---- Monument Campus hub: transparent cutouts on a clean gradient ---- */
+    body.campus-page {
+      color-scheme: light;
+      min-height: 100dvh;
+      background: linear-gradient(135deg, #f7f2e5 0%, #efeee2 45%, #dfe6e0 100%);
+      overflow-x: hidden;
+    }
+
+    .campus-hub {
+      position: relative;
+      min-height: 100dvh;
+      overflow: hidden;
+    }
+
+    /* hub uses the shared .site-nav, floated over the stage */
+    .campus-page .site-nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 5;
+      background: none;
+    }
+
+    /* the stage: monuments scattered on the gradient */
+    .stage {
+      position: relative;
+      min-height: 100dvh;
+      max-width: 1400px;
+      margin: 0 auto;
+      will-change: transform;
+    }
+    .stage.is-zooming {
+      animation: dive 0.9s cubic-bezier(0.45, 0, 0.55, 0.55) forwards;
+    }
+    @keyframes dive {
+      0%   { transform: scale(1); }
+      22%  { transform: scale(0.955); }
+      100% { transform: scale(3.6); }
+    }
+    .campus-hub.is-departing::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: #efeee2;
+      z-index: 9;
+      opacity: 0;
+      animation: fadeout 0.55s ease-in 0.32s forwards;
+    }
+    @keyframes fadeout { to { opacity: 1; } }
+
+    .monu {
+      position: absolute;
+      text-decoration: none;
+      display: block;
+      will-change: transform;
+    }
+    .monu img {
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: drop-shadow(0 26px 30px rgba(95, 100, 75, 0.32));
+      transition: transform 0.35s var(--ease-out), filter 0.35s var(--ease-out);
+    }
+    .monu:hover img, .monu:focus-visible img {
+      transform: translateY(-10px) scale(1.03);
+      filter: drop-shadow(0 38px 38px rgba(95, 100, 75, 0.4));
+    }
+    .monu:focus-visible { outline: none; }
+
+    /* scatter: echoes the original campus composition */
+    .monu--about      { left: 5%;  top: 37%; width: clamp(150px, 15.5vw, 230px); }
+    .monu--work       { left: 26%; top: 30%; width: clamp(160px, 16.5vw, 250px); }
+    .monu--resume     { left: 46%; top: 21%; width: clamp(110px, 10.5vw, 160px); }
+    .monu--creator    { left: 61%; top: 39%; width: clamp(170px, 17vw, 260px); }
+    .monu--contact    { right: 4%; top: 33%; width: clamp(120px, 12vw, 185px); }
+
+    /* borderless floating labels, below each monument */
+    .monu .plate {
+      position: absolute;
+      left: 50%;
+      bottom: -2.4rem;
+      transform: translate(-50%, 10px);
+      white-space: nowrap;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(0.85rem, 1.05vw, 1rem);
+      letter-spacing: 0.01em;
+      color: #262a20;
+      text-shadow:
+        0 1px 2px rgba(255,255,255,0.9),
+        0 2px 18px rgba(255,255,255,0.85);
+      opacity: 0;
+      transition: opacity 0.3s var(--ease-out), transform 0.3s var(--ease-out);
+      pointer-events: none;
+    }
+    .monu:hover .plate, .monu:focus-visible .plate {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .monu:hover .plate, .monu:focus-visible .plate {
+        animation: plate-float 2.6s ease-in-out 0.3s infinite;
+      }
+    }
+    @keyframes plate-float {
+      0%, 100% { transform: translate(-50%, 0); }
+      50% { transform: translate(-50%, -7px); }
+    }
+    .monu:focus-visible .plate { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+    /* idle levitation, one rhythm each */
+    @media (prefers-reduced-motion: no-preference) {
+      .monu { animation: bob 7s ease-in-out infinite; }
+      .monu--about   { animation-duration: 7.4s; }
+      .monu--work    { animation-duration: 6.2s; animation-delay: -2s; }
+      .monu--resume  { animation-duration: 8.6s; animation-delay: -4s; }
+      .monu--creator { animation-duration: 6.9s; animation-delay: -1s; }
+      .monu--contact { animation-duration: 8s;   animation-delay: -3s; }
+      .stage.is-zooming .monu { animation: none; }
+    }
+    @keyframes bob {
+      0%, 100% { translate: 0 0; }
+      50% { translate: 0 -10px; }
+    }
+
+    .campus-hub__hint {
+      position: absolute;
+      bottom: 1.6rem;
+      left: 50%;
+      translate: -50% 0;
+      z-index: 2;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    /* mobile: monuments become a tidy column of cards */
+    .campus-links { display: none; }
+    @media (max-width: 767px) {
+      .stage { display: none; }
+      .campus-hub { overflow: visible; padding: 6.5rem 1.5rem 3rem; min-height: auto; }
+      .campus-hub__hint { display: none; }
+      .campus-links {
+        display: grid;
+        gap: 0.9rem;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .campus-links a {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.9rem 1.15rem;
+        border-radius: var(--radius-card);
+        border: 1px solid rgba(255,255,255,0.7);
+        background: rgba(255,255,255,0.72);
+        text-decoration: none;
+        font-family: var(--font-display);
+        font-weight: 700;
+        color: var(--text);
+      }
+      .campus-links img { width: 56px; height: auto; }
+      .campus-links small {
+        font-family: var(--font-body);
+        font-weight: 400;
+        color: var(--text-muted);
+        margin-left: auto;
+      }
+    }
+  </style>
+</head>
+<body class="campus-page">
+
+  <div class="campus-hub" id="hub">
+
+    <header class="site-nav">
+      <a class="site-nav__name" href="index.html">Nikhil Dasari</a>
+      <nav aria-label="Primary">
+        <ul class="site-nav__links">
+          <li><a href="index.html" aria-current="page">Map</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="work.html">Work</a></li>
+          <li><a href="resume.html">Resume</a></li>
+          <li><a href="ugc.html">Creator</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <nav class="stage" aria-label="Site map">
+      <a class="monu monu--about" href="about.html">
+        <img src="assets/monu-pavilion.webp" alt="The pavilion: a domed stone monument on a floating plinth" width="800" height="780">
+        <span class="plate">About Me</span>
+      </a>
+      <a class="monu monu--work" href="work.html">
+        <img src="assets/monu-foundry.webp" alt="The foundry: a terraced tower with glowing furnace arches" width="770" height="800">
+        <span class="plate">Work &amp; Experience</span>
+      </a>
+      <a class="monu monu--resume" href="resume.html">
+        <img src="assets/monu-archive.webp" alt="The archive: a tall tower with rows of arched windows" width="420" height="800">
+        <span class="plate">Resume</span>
+      </a>
+      <a class="monu monu--creator" href="ugc.html">
+        <img src="assets/monu-amphi.webp" alt="The amphitheater: a circular stepped theater with a stage wall" width="800" height="720">
+        <span class="plate">Creator</span>
+      </a>
+      <a class="monu monu--contact" href="contact.html">
+        <img src="assets/monu-lighthouse.webp" alt="The lighthouse: a small white tower with a glass lantern room" width="560" height="800">
+        <span class="plate">Contact</span>
+      </a>
+    </nav>
+
+    <p class="campus-hub__hint">Five monuments. Pick a door.</p>
+
+    <ul class="campus-links">
+      <li><a href="about.html"><img src="assets/monu-pavilion.webp" alt="">About Me <small>the pavilion</small></a></li>
+      <li><a href="work.html"><img src="assets/monu-foundry.webp" alt="">Work <small>the foundry</small></a></li>
+      <li><a href="resume.html"><img src="assets/monu-archive.webp" alt="">Resume <small>the archive</small></a></li>
+      <li><a href="ugc.html"><img src="assets/monu-amphi.webp" alt="">Creator <small>the amphitheater</small></a></li>
+      <li><a href="contact.html"><img src="assets/monu-lighthouse.webp" alt="">Contact <small>the lighthouse</small></a></li>
+    </ul>
+
+  </div>
+
+  <script>
+  (function () {
+    "use strict";
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var hub = document.getElementById("hub");
+    var stage = document.querySelector(".stage");
+    if (!hub || !stage) return;
+
+    stage.querySelectorAll(".monu").forEach(function (monu) {
+      monu.addEventListener("click", function (e) {
+        if (reduce) return;
+        e.preventDefault();
+        var href = monu.getAttribute("href");
+        var r = monu.getBoundingClientRect();
+        var s = stage.getBoundingClientRect();
+        var ox = ((r.left + r.width / 2) - s.left) / s.width * 100;
+        var oy = ((r.top + r.height / 2) - s.top) / s.height * 100;
+        stage.style.transformOrigin = ox + "% " + oy + "%";
+        stage.classList.add("is-zooming");
+        hub.classList.add("is-departing");
+        window.setTimeout(function () { window.location.href = href; }, 870);
+      });
+    });
+  })();
+  </script>
+</body>
+</html>

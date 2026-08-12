@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About | Nikhil Dasari</title>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@700,800&f[]=satoshi@400,500,700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* ---- About: front porch + now/then/next ---- */
+
+    .porch {
+      display: grid;
+      grid-template-columns: 7fr 5fr;
+      gap: clamp(2rem, 5vw, 4.5rem);
+      align-items: center;
+      min-height: 58dvh;
+      padding-top: clamp(1.5rem, 4vw, 3rem);
+    }
+    @media (max-width: 767px) { .porch { grid-template-columns: 1fr; min-height: auto; } }
+    .porch h1 { font-size: clamp(2.6rem, 5.5vw, 4.4rem); max-width: 13ch; }
+    .porch .intro { font-size: 1.08rem; max-width: 46ch; }
+    .porch__photo {
+      justify-self: center;
+      width: min(100%, 380px);
+      height: auto;
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      rotate: 1.5deg;
+    }
+
+    /* three doors: stacked rows, not equal cards */
+    .doors { margin-top: 2rem; display: grid; gap: 0.7rem; max-width: 560px; }
+    .door {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.95rem 1.4rem;
+      border-radius: var(--radius-card);
+      border: 1px solid var(--line-soft);
+      background: var(--surface-raised);
+      text-decoration: none;
+      color: var(--text);
+      transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), border-color 0.25s var(--ease-out);
+    }
+    .door:hover { transform: translateX(6px); border-color: var(--accent); box-shadow: var(--shadow-soft); }
+    .door strong { font-family: var(--font-display); font-weight: 700; white-space: nowrap; }
+    .door span { color: var(--text-muted); font-size: 0.9rem; flex: 1; }
+    .door i { font-style: normal; color: var(--accent); font-weight: 700; }
+    .door--accent { background: var(--accent-soft); border-color: transparent; }
+
+    /* now / then / next */
+    .ntn h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--accent);
+    }
+    .ntn h2 small {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 400;
+      font-family: var(--font-body);
+      color: var(--text-muted);
+      letter-spacing: 0;
+      margin-top: 0.2rem;
+    }
+    .now-grid {
+      display: grid;
+      grid-template-columns: 5fr 4fr;
+      gap: 1.5rem;
+      align-items: stretch;
+    }
+    @media (max-width: 767px) { .now-grid { grid-template-columns: 1fr; } }
+    .now-grid .card p:last-child { margin-bottom: 0; }
+    .story { font-size: 1.05rem; max-width: 62ch; }
+    .story strong { color: var(--text); }
+
+    /* next: text + graduation frame */
+    .next-grid {
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      gap: clamp(1.5rem, 4vw, 3rem);
+      align-items: center;
+    }
+    @media (max-width: 767px) { .next-grid { grid-template-columns: 1fr; } }
+    .next-grid--text { grid-template-columns: 1fr; max-width: 62ch; }
+    .next-grid img {
+      width: min(100%, 300px);
+      height: auto;
+      justify-self: center;
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      rotate: -1.2deg;
+    }
+
+    /* off the clock: masonry */
+    .gallery {
+      columns: 3;
+      column-gap: 1rem;
+    }
+    @media (max-width: 1023px) { .gallery { columns: 2; } }
+    @media (max-width: 599px)  { .gallery { columns: 1; } }
+    .gallery figure {
+      margin: 0 0 1rem;
+      break-inside: avoid;
+    }
+    .gallery img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: var(--radius-card);
+      box-shadow: 0 10px 26px -16px rgba(95, 100, 75, 0.35);
+      transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+    }
+    .gallery figure:hover img {
+      transform: translateY(-4px) scale(1.012);
+      box-shadow: var(--shadow-soft);
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-nav">
+    <a class="site-nav__name" href="index.html">Nikhil Dasari</a>
+    <nav aria-label="Primary">
+      <ul class="site-nav__links">
+        <li><a href="index.html">Map</a></li>
+        <li><a href="about.html" aria-current="page">About</a></li>
+        <li><a href="work.html">Work</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="ugc.html">Creator</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+
+    <!-- the front porch -->
+    <section class="porch">
+      <div>
+        <h1 class="rise">Hey, I'm Nikhil. Good to meet you.</h1>
+        <p class="intro rise rise-2">UT Dallas grad, soon-to-be full-time Technology Consultant at EY, and a big believer that business problems and technology answers belong at the same table. Dallas raised, always up for a good conversation.</p>
+
+        <nav class="doors rise rise-3" aria-label="Where to next">
+          <a class="door door--accent" href="work.html">
+            <strong>Here to hire?</strong>
+            <span>Four Fortune 500 internships, one resume-ready story.</span>
+            <i>&rarr;</i>
+          </a>
+          <a class="door" href="ugc.html">
+            <strong>Here to collab?</strong>
+            <span>The creator side: travel, fashion, and student life.</span>
+            <i>&rarr;</i>
+          </a>
+          <a class="door" href="#story">
+            <strong>Just curious?</strong>
+            <span>Keep scrolling, I'll give you the short version.</span>
+            <i>&darr;</i>
+          </a>
+        </nav>
+      </div>
+      <img class="porch__photo rise rise-3"
+           src="https://static.wixstatic.com/media/37bf4d_70c5c0db9eec40dd9ae5473a5c6e4a43~mv2.jpg/v1/crop/x_0,y_512,w_1182,h_1182/fill/w_760,h_760,al_c,q_85/unnamed.jpg"
+           alt="Nikhil Dasari" width="760" height="760">
+    </section>
+
+    <!-- NOW -->
+    <section class="block ntn reveal" id="story">
+      <h2>Now.<small>What my weeks look like</small></h2>
+      <div class="now-grid">
+        <div class="card card--accent">
+          <h3>Incoming Technology Consultant, EY</h3>
+          <p>Starting full time soon, picking up right where the internship left off: helping teams bridge business problems and technology answers.</p>
+        </div>
+        <div class="card">
+          <h3>UT Dallas Graduate</h3>
+          <p>Information Technology Systems, Collegium V Honors, 3.88 GPA, AIS Finance Director. Class of 2026.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- THEN -->
+    <section class="block ntn reveal">
+      <h2>Then.<small>How I got here</small></h2>
+      <p class="story">The short version: I started behind a <strong>Starbucks</strong> bar learning to keep calm at a hundred drinks an hour, then taught kids to code at <strong>Code Ninjas</strong>. From there, the bigger rooms: assortment analytics at <strong>Walmart</strong>, product development at <strong>Delta Air Lines</strong>, and a technology consulting internship at <strong>EY</strong> in Dallas that turned into a full-time offer. Along the way, I graduated from <strong>UT Dallas</strong>. Every stop taught the same lesson from a different angle: understand the person first, then build the thing.</p>
+    </section>
+
+    <!-- NEXT -->
+    <section class="block ntn reveal">
+      <h2>Next.<small>Where this is heading</small></h2>
+      <div class="next-grid next-grid--text">
+        <div>
+          <p class="story">I'm hoping to succeed and grow my skills as a Technology Consultant at EY, all while keeping my creative side alive alongside it. If that overlap sounds interesting to you, I'd love to talk.</p>
+          <a class="btn btn--primary" href="contact.html">Say hello <span class="btn__icon">&rarr;</span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- a few frames -->
+    <section class="block reveal">
+      <h2>Off the clock</h2>
+      <p>Mountains, coastlines, good company, and one very affectionate dog. A few frames from the last year.</p>
+      <div class="gallery">
+        <figure><img src="assets/life/life-grad.webp" alt="Nikhil in his graduation gown walking through the UT Dallas atrium" width="825" height="1100" loading="lazy"></figure>
+        <figure><img src="assets/life/life-cascades.webp" alt="Trail selfie with a friend in the North Cascades" width="1100" height="825" loading="lazy"></figure>
+        <figure><img src="assets/life/life-venice.webp" alt="Walking along the Grand Canal in Venice near the Rialto Bridge" width="825" height="1100" loading="lazy"></figure>
+        <figure><img src="assets/life/life-alpine.webp" alt="Resting on a ridge above an alpine lake in the North Cascades" width="825" height="1100" loading="lazy"></figure>
+        <figure><img src="assets/life/life-dog.webp" alt="Selfie with a golden doodle mid kiss" width="825" height="1100" loading="lazy"></figure>
+        <figure><img src="assets/life/life-coast.webp" alt="Standing on rocky shoreline at golden hour" width="825" height="1100" loading="lazy"></figure>
+        <figure><img src="assets/life/life-pittsburgh.webp" alt="Selfie above the Pittsburgh skyline" width="619" height="1100" loading="lazy"></figure>
+        <figure><img src="assets/life/life-boat.webp" alt="Driving a small boat on open water" width="825" height="1100" loading="lazy"></figure>
+        <figure><img src="assets/life/life-bigsur.webp" alt="With a friend on the cliffs above a Pacific beach" width="825" height="1100" loading="lazy"></figure>
+        <figure><img src="assets/life/life-dusk.webp" alt="Watching the bay at dusk with a friend" width="1100" height="880" loading="lazy"></figure>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>Nikhil Dasari</span>
+    <a href="contact.html">Contact</a>
+  </footer>
+
+  <script src="js/site.js"></script>
+</body>
+</html>

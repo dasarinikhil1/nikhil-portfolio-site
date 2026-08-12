@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Creator | Nikhil Dasari</title>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@700,800&f[]=satoshi@400,500,700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* ---- Creator page: light scrollytelling edition ---- */
+
+    /* page theme lock: always light and airy, regardless of system theme */
+    body.creator {
+      --surface: #f2f1e8;
+      --surface-raised: #fbfaf4;
+      --line: #d6d5c4;
+      --line-soft: #e7e6d8;
+      --text: #23261f;
+      --text-muted: #6a6d60;
+      --accent: #2b7a58;
+      --accent-soft: #e3eee6;
+      --accent-ink: #ffffff;
+      --shadow-soft: 0 16px 40px -22px rgba(60, 90, 75, 0.35);
+      color-scheme: light;
+    }
+
+    .zine-ticker {
+      overflow: hidden;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 0.45rem 0;
+      white-space: nowrap;
+    }
+    .zine-ticker__track { display: inline-block; }
+    @media (prefers-reduced-motion: no-preference) {
+      .zine-ticker__track { animation: ticker 26s linear infinite; }
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .zine-ticker span { padding: 0 2.2rem; }
+
+    /* hero: airy type-led, facts up front */
+    .creator-hero {
+      min-height: 62dvh;
+      display: grid;
+      align-content: center;
+      justify-items: start;
+      padding-top: clamp(2rem, 5vw, 4rem);
+    }
+    .creator-hero h1 {
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      max-width: 14ch;
+    }
+    .creator-hero p { font-size: 1.05rem; }
+    .fact-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0; margin: 1.2rem 0 1.8rem; }
+    .fact-chips li {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      padding: 0.4rem 1rem;
+      font-size: 0.85rem;
+      background: var(--surface-raised);
+    }
+    .fact-chips li strong { font-weight: 700; color: var(--accent); }
+
+    /* ---- scrollytelling: pinned stage, chapters swap on scroll ---- */
+    .scrolly { position: relative; }
+    .scrolly__stage {
+      position: sticky;
+      top: 76px;
+      height: calc(100dvh - 76px);
+      overflow: hidden;
+      display: grid;
+    }
+    .chapter {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-columns: 5fr 6fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+      padding: 0 clamp(0.5rem, 2vw, 2rem);
+      opacity: 0;
+      transform: translateY(36px) scale(0.985);
+      transition: opacity 0.55s var(--ease-out), transform 0.55s var(--ease-out);
+      pointer-events: none;
+    }
+    .chapter.is-active {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+    .chapter__no {
+      font-size: 0.68rem;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+    .chapter h2 { font-size: clamp(2.2rem, 4.5vw, 3.6rem); margin-bottom: 0.4rem; }
+    .chapter .hook {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--text);
+      font-size: 1.05rem;
+      margin-bottom: 0.6rem;
+    }
+    .chapter__links { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 1.2rem; }
+    .chapter__links .drive {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.75rem 1.6rem;
+      border-radius: var(--radius-pill);
+      border: 1px dashed var(--line);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .chapter__cover {
+      aspect-ratio: 4 / 5;
+      max-height: calc(100dvh - 200px);
+      justify-self: center;
+      width: min(100%, 460px);
+      border: 1px solid var(--line-soft);
+      box-shadow: var(--shadow-soft);
+      display: grid;
+      place-items: center;
+      align-content: center;
+      gap: 0.5rem;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      background: linear-gradient(165deg, #ffffff 40%, var(--accent-soft) 140%);
+    }
+    .chapter__cover em {
+      font-style: normal;
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.26em;
+      color: var(--text-muted);
+    }
+    .chapter__cover .sub {
+      font-family: var(--font-body);
+      font-weight: 400;
+      font-size: 0.85rem;
+      text-transform: none;
+      letter-spacing: 0;
+      color: var(--text-muted);
+      max-width: 30ch;
+      text-align: center;
+    }
+
+
+    /* embedded TikTok player, phone-framed */
+    .chapter__embed {
+      justify-self: center;
+      height: calc(100dvh - 220px);
+      max-height: 640px;
+      aspect-ratio: 9 / 16;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      border: 1px solid var(--line-soft);
+      box-shadow: var(--shadow-soft);
+      background: var(--surface-raised);
+    }
+    .chapter__embed iframe { width: 100%; height: 100%; border: 0; display: block; }
+    @media (max-width: 767px), (prefers-reduced-motion: reduce) {
+      .chapter__embed { height: auto; width: min(100%, 320px); margin: 0 auto; }
+    }
+
+    /* chapter progress dots: convey active chapter state */
+    .scrolly__dots {
+      position: absolute;
+      right: 0.25rem;
+      top: 50%;
+      transform: translateY(-50%);
+      display: grid;
+      gap: 0.6rem;
+    }
+    .scrolly__dots i {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--line);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .scrolly__dots i.on { background: var(--accent); transform: scale(1.35); }
+
+    .scrolly__steps { position: relative; z-index: -1; }
+    .scrolly__steps .step { height: 100dvh; }
+    .scrolly__steps .step:first-child { height: 55dvh; }
+
+    /* static fallback: small screens, reduced motion, or no JS */
+    @media (max-width: 767px), (prefers-reduced-motion: reduce) {
+      .scrolly__stage { position: static; height: auto; overflow: visible; display: block; }
+      .chapter {
+        position: static;
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+        grid-template-columns: 1fr;
+        padding: 2.5rem 0;
+      }
+      .chapter__cover { max-height: none; }
+      .scrolly__steps, .scrolly__dots { display: none; }
+    }
+
+    /* ---- agency fact sheet ---- */
+    .fact-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+    @media (max-width: 767px) { .fact-grid { grid-template-columns: 1fr; } }
+    .fact-grid .card h3 { margin-bottom: 0.35rem; }
+    .fact-grid .card .tag {
+      display: inline-block;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.7rem;
+    }
+    .rates { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.9rem; }
+    .rates span {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-pill);
+      padding: 0.35rem 0.95rem;
+      font-size: 0.85rem;
+      background: var(--surface);
+    }
+
+    .drive-note {
+      border: 1px solid var(--line-soft);
+      border-radius: var(--radius-card);
+      background: var(--accent-soft);
+      padding: 1.6rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .drive-note p { margin: 0; }
+    .drive-note strong { color: var(--accent); }
+
+    .creator-cta { text-align: center; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .creator-cta p { margin-left: auto; margin-right: auto; }
+  </style>
+</head>
+<body class="creator">
+
+  <header class="site-nav">
+    <a class="site-nav__name" href="index.html">Nikhil Dasari</a>
+    <nav aria-label="Primary">
+      <ul class="site-nav__links">
+        <li><a href="index.html">Map</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="work.html">Work</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="ugc.html" aria-current="page">Creator</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="zine-ticker" aria-hidden="true">
+    <div class="zine-ticker__track">
+      <span>Open for brand collabs</span><span>Whitelisting available</span><span>English and Telugu</span><span>Based in Dallas</span><span>Open for brand collabs</span><span>Whitelisting available</span><span>English and Telugu</span><span>Based in Dallas</span>
+      <span>Open for brand collabs</span><span>Whitelisting available</span><span>English and Telugu</span><span>Based in Dallas</span><span>Open for brand collabs</span><span>Whitelisting available</span><span>English and Telugu</span><span>Based in Dallas</span>
+    </div>
+  </div>
+
+  <main class="page">
+
+    <!-- hero: the agency answers, above the fold -->
+    <section class="creator-hero">
+      <h1>Content that earns its first three seconds.</h1>
+      <ul class="fact-chips">
+        <li><strong>Based in</strong> Dallas, Texas, USA</li>
+        <li><strong>Languages</strong> English, Telugu</li>
+        <li><strong>Style</strong> Hybrid: your brief, my spin</li>
+        <li><strong>Whitelisting</strong> Available</li>
+      </ul>
+      <a class="btn btn--primary" href="contact.html">Start a collab</a>
+    </section>
+
+    <!-- scrollytelling: three lanes of work, pinned stage -->
+    <section class="scrolly" id="lanes" aria-label="Work, segmented by lane">
+      <div class="scrolly__stage">
+
+        <article class="chapter is-active" data-chapter="0">
+          <div>
+            <span class="chapter__no">Lane 01 of 03</span>
+            <h2>Travel</h2>
+            <p class="hook">Hook: a summit, a wave, or a street you have never seen, inside 3 seconds.</p>
+            <p>Dolomites, Hawaii, San Francisco, Savannah, and a return to India after ten years. Cinematic recaps shot on location.</p>
+            <div class="chapter__links">
+              <a class="btn btn--ghost" href="https://www.tiktok.com/@nikhil.dasari/video/7660290146750844173" target="_blank" rel="noopener">Watch on TikTok</a>
+              <a class="drive" href="#" aria-disabled="true">Google Drive: link coming</a>
+            </div>
+          </div>
+          <div class="chapter__embed">
+            <iframe src="https://www.tiktok.com/player/v1/7660290146750844173?music_info=0&amp;description=0&amp;rel=0"
+                    title="Travel lane: Dolomites summer video" loading="lazy"
+                    allow="fullscreen" allowfullscreen></iframe>
+          </div>
+        </article>
+
+        <article class="chapter" data-chapter="1">
+          <div>
+            <span class="chapter__no">Lane 02 of 03</span>
+            <h2>Fashion</h2>
+            <p class="hook">Hook: the watch hits the wrist before you can scroll past it.</p>
+            <p>Watch collecting, streetwear, and outfit breakdowns. My most-watched lane, led by the watch collection video at 2k plays.</p>
+            <div class="chapter__links">
+              <a class="btn btn--ghost" href="https://www.tiktok.com/@nikhil.dasari/video/7645040917212171534" target="_blank" rel="noopener">Watch on TikTok</a>
+              <a class="drive" href="#" aria-disabled="true">Google Drive: link coming</a>
+            </div>
+          </div>
+          <div class="chapter__embed">
+            <iframe src="https://www.tiktok.com/player/v1/7645040917212171534?music_info=0&amp;description=0&amp;rel=0"
+                    title="Fashion lane: watch collection video" loading="lazy"
+                    allow="fullscreen" allowfullscreen></iframe>
+          </div>
+        </article>
+
+        <article class="chapter" data-chapter="2">
+          <div>
+            <span class="chapter__no">Lane 03 of 03</span>
+            <h2>Life</h2>
+            <p class="hook">Hook: real answers on internships from someone who landed four of them.</p>
+            <p>Navigating internships, semester recaps, and a digital diary of student life. Education content with lived credibility: EY, Delta, Walmart, Cognizant.</p>
+            <div class="chapter__links">
+              <a class="btn btn--ghost" href="https://www.tiktok.com/@nikhil.dasari/video/7564593462004256014" target="_blank" rel="noopener">Watch on TikTok</a>
+              <a class="drive" href="#" aria-disabled="true">Google Drive: link coming</a>
+            </div>
+          </div>
+          <div class="chapter__embed">
+            <iframe src="https://www.tiktok.com/player/v1/7564593462004256014?music_info=0&amp;description=0&amp;rel=0"
+                    title="Life lane: navigating internships video" loading="lazy"
+                    allow="fullscreen" allowfullscreen></iframe>
+          </div>
+        </article>
+
+        <div class="scrolly__dots" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+      </div>
+
+      <div class="scrolly__steps" aria-hidden="true">
+        <div class="step" data-step="0"></div>
+        <div class="step" data-step="1"></div>
+        <div class="step" data-step="2"></div>
+      </div>
+    </section>
+
+    <!-- agency fact sheet -->
+    <section class="block reveal">
+      <h2>The fact sheet</h2>
+      <p>The details agencies ask for, answered up front.</p>
+      <div class="fact-grid">
+        <div class="card">
+          <span class="tag">Languages</span>
+          <h3>English and Telugu</h3>
+          <p>Fluent in both, comfortable on camera in both. Multilingual campaigns welcome.</p>
+          <div class="ph ph--logo">Video example: speaking Telugu on camera, coming soon</div>
+        </div>
+        <div class="card">
+          <span class="tag">Location</span>
+          <h3>Dallas, Texas, United States</h3>
+          <p>Regularly in Atlanta for the Delta co-op. City-specific shoots across DFW available, travel negotiable.</p>
+        </div>
+        <div class="card">
+          <span class="tag">Whitelisting</span>
+          <h3>Yes, offered</h3>
+          <p>Run my handle as your ad. Standard terms below, rates shared with the media kit.</p>
+          <div class="rates"><span>30 days</span><span>60 days</span><span>90 days</span></div>
+        </div>
+        <div class="card">
+          <span class="tag">Service level</span>
+          <h3>Hybrid creator</h3>
+          <p>I execute your brief precisely, then offer a creative spin as an alternate cut. Strategy and scripting available on request.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- downloads, agency-friendly -->
+    <section class="block reveal">
+      <div class="drive-note">
+        <p><strong>Agency-friendly downloads.</strong> Every deliverable ships with a Google Drive link, cleared for your client decks. No blocked exports.</p>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="block creator-cta reveal">
+      <h2>Put me on a campaign</h2>
+      <p>Brief in hand or just exploring, I reply fast and deliver faster.</p>
+      <a class="btn btn--primary" href="contact.html">Start a collab</a>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>Nikhil Dasari</span>
+    <a href="https://www.tiktok.com/@nikhil.dasari" target="_blank" rel="noopener">TikTok, @nikhil.dasari</a>
+  </footer>
+
+  <script src="js/site.js"></script>
+  <script>
+  (function () {
+    "use strict";
+    var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var small = window.matchMedia("(max-width: 767px)").matches;
+    if (reduce || small || !("IntersectionObserver" in window)) return;
+
+    var chapters = document.querySelectorAll(".chapter");
+    var dots = document.querySelectorAll(".scrolly__dots i");
+    var steps = document.querySelectorAll(".scrolly__steps .step");
+    if (!chapters.length || !steps.length) return;
+
+    function activate(i) {
+      chapters.forEach(function (c, j) { c.classList.toggle("is-active", i === j); });
+      dots.forEach(function (d, j) { d.classList.toggle("on", i === j); });
+    }
+
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          activate(parseInt(entry.target.getAttribute("data-step"), 10));
+        }
+      });
+    }, { rootMargin: "-45% 0px -45% 0px" });
+
+    steps.forEach(function (s) { io.observe(s); });
+  })();
+  </script>
+</body>
+</html>

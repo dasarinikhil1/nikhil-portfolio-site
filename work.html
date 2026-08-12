@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Work | Nikhil Dasari</title>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@700,800&f[]=satoshi@400,500,700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* ---- Work: editorial refresh ---- */
+
+    .work-hero h1 { max-width: 12ch; }
+    .work-hero p { font-size: 1.05rem; }
+
+    /* story card: the EY thread gets the accent surface */
+    .feature-card--story { background: var(--accent-soft); border-color: transparent; }
+    .tag-pill {
+      display: inline-block;
+      padding: 0.32rem 0.95rem;
+      border-radius: var(--radius-pill);
+      background: var(--accent);
+      color: var(--accent-ink);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.02em;
+    }
+    .card--tint {
+      background: linear-gradient(160deg, var(--surface-raised) 55%, var(--accent-soft) 140%);
+      border-color: transparent;
+    }
+
+    /* earlier chapters: timeline rail */
+    .timeline { position: relative; max-width: 720px; padding-left: 2.1rem; }
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 6px;
+      top: 8px;
+      bottom: 8px;
+      width: 2px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, var(--accent), var(--line));
+    }
+    .tl-item { position: relative; padding-bottom: 2rem; }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-item::before {
+      content: "";
+      position: absolute;
+      left: -2.1rem;
+      top: 0.4rem;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--surface);
+      border: 3px solid var(--accent);
+      box-sizing: border-box;
+    }
+    .tl-item time { font-size: 0.8rem; color: var(--text-muted); }
+    .tl-item h3 { font-size: 1.08rem; margin: 0.15rem 0 0.25rem; }
+    .tl-item p { font-size: 0.93rem; margin: 0; }
+
+    /* featured cards: trigger button that opens an in-page detail panel */
+    .flip-nav {
+      font: inherit;
+      text-align: left;
+      color: inherit;
+      appearance: none;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    /* detail panel: opens centered, ~70% of viewport, gap on all sides */
+    dialog.work-panel {
+      width: 70vw;
+      max-width: 900px;
+      height: 70dvh;
+      margin: auto;
+      padding: 0;
+      border: none;
+      border-radius: var(--radius-card);
+      background: var(--surface-raised);
+      box-shadow: var(--shadow-soft);
+      color: var(--text);
+      position: fixed;
+      inset: 0;
+      opacity: 0;
+      transform: scale(0.96);
+      transition: opacity 0.22s var(--ease-out), transform 0.22s var(--ease-out);
+    }
+    dialog.work-panel.is-open { opacity: 1; transform: scale(1); }
+    dialog.work-panel::backdrop {
+      background: color-mix(in srgb, var(--text) 55%, transparent);
+      opacity: 0;
+      transition: opacity 0.22s var(--ease-out);
+    }
+    dialog.work-panel.is-open::backdrop { opacity: 1; }
+
+    .work-panel__body { height: 100%; overflow-y: auto; padding: clamp(1.5rem, 4vw, 3rem); }
+    .work-panel__close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 2.25rem;
+      height: 2.25rem;
+      border-radius: 50%;
+      border: 1px solid var(--line-soft);
+      background: var(--surface);
+      display: grid;
+      place-items: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+      color: var(--text);
+    }
+    .work-panel__close:hover { background: var(--accent-soft); border-color: var(--accent); }
+
+    .work-panel__hero { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+    .work-panel__logo {
+      width: 120px;
+      height: 72px;
+      border-radius: var(--radius-card);
+      display: grid;
+      place-items: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+    }
+    .work-panel__section { margin-bottom: 2rem; }
+    .work-panel__section:last-child { margin-bottom: 0; }
+
+    .work-panel__quote {
+      margin: 1.25rem 0 0;
+      padding: 0.2rem 0 0.2rem 1.1rem;
+      border-left: 3px solid var(--accent);
+      font-style: italic;
+      color: var(--text-muted);
+    }
+
+    .work-panel__gallery { columns: 2; column-gap: 0.85rem; }
+    .work-panel__gallery figure { margin: 0 0 0.85rem; break-inside: avoid; }
+    .work-panel__gallery img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-soft);
+      transition: transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+    }
+    .work-panel__gallery figure:hover img { transform: translateY(-4px) scale(1.012); }
+
+    @media (max-width: 599px) {
+      dialog.work-panel { width: 92vw; height: 82dvh; }
+      .work-panel__gallery { columns: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      dialog.work-panel, dialog.work-panel::backdrop { transition: none; opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-nav">
+    <a class="site-nav__name" href="index.html">Nikhil Dasari</a>
+    <nav aria-label="Primary">
+      <ul class="site-nav__links">
+        <li><a href="index.html">Map</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="work.html" aria-current="page">Work</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="ugc.html">Creator</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page">
+
+    <section class="split-hero work-hero" style="min-height:42dvh">
+      <div>
+        <h1 class="rise">Where I've forged my experience.</h1>
+        <p class="rise rise-2">Consulting, product development, and data work across four Fortune 500 environments, now carried into a full-time consulting seat at EY.</p>
+      </div>
+      <img class="rise rise-3" src="assets/monument-forge.webp" alt="" width="270" height="460"
+           style="max-width:280px; width:100%; height:auto; justify-self:end; filter:drop-shadow(0 24px 28px rgba(95,100,75,0.35))">
+    </section>
+
+    <section class="block reveal reveal--stagger">
+      <h2>Featured</h2>
+
+      <button type="button" class="feature-card feature-card--story flip-nav" data-dialog-target="panel-ey">
+        <div class="logo-tile" style="background:#ffffff; border:1px solid var(--line-soft)">
+          <img src="assets/logos/ey.svg" alt="EY" style="max-width:55%; max-height:55%;">
+        </div>
+        <div>
+          <p class="meta">Summer 2025, Dallas</p>
+          <h3>Technology Consulting Intern, EY</h3>
+          <p>Supported an ECC to S/4HANA transformation: analyzed access controls, mitigated segregation-of-duties risk, and translated stakeholder needs into 10+ clear business requirements that guided leadership decisions.</p>
+          <span class="tag-pill">Returning full time as a Technology Consultant</span>
+        </div>
+      </button>
+
+      <button type="button" class="feature-card feature-card--flip flip-nav" data-dialog-target="panel-delta">
+        <div class="logo-tile" style="background:#ffffff; border:1px solid var(--line-soft)">
+          <img src="assets/logos/delta.svg" alt="Delta Air Lines" style="max-width:75%; max-height:45%;">
+        </div>
+        <div>
+          <p class="meta">2025 to 2026, Atlanta</p>
+          <h3>Product Development Co-op, Delta Air Lines</h3>
+          <p>Built allotment automation for DeliverDirect in Python and VBA, scaling operations across 500+ transactions and multiple teams. Root-cause analysis in Tableau improved SLA compliance by 10% across 20+ last-mile stations.</p>
+        </div>
+      </button>
+
+      <button type="button" class="feature-card flip-nav" data-dialog-target="panel-walmart">
+        <div class="logo-tile" style="background:#ffffff; border:1px solid var(--line-soft)">
+          <img src="assets/logos/walmart.svg" alt="Walmart" style="max-width:72%; max-height:55%;">
+        </div>
+        <div>
+          <p class="meta">Summer 2024, Bentonville</p>
+          <h3>Business Operations Intern, Walmart</h3>
+          <p>Analyzed 100+ redundant assortment items with Luminate and Modular Analytics, then shipped a Power BI dashboard that improved shelf-space optimization by 20% and cut duplicative offerings by 25%.</p>
+        </div>
+      </button>
+
+      <button type="button" class="feature-card feature-card--flip flip-nav" data-dialog-target="panel-cognizant">
+        <div class="logo-tile" style="background:#ffffff; border:1px solid var(--line-soft)">
+          <img src="assets/logos/cognizant.svg" alt="Cognizant" style="max-width:75%; max-height:45%;">
+        </div>
+        <div>
+          <p class="meta">Summer 2024</p>
+          <h3>Generative AI Extern, Cognizant</h3>
+          <p>Designed NLP and CNN models in PyTorch, improving accuracy through transfer learning and hyperparameter tuning.</p>
+        </div>
+      </button>
+    </section>
+
+    <section class="block">
+      <h2 class="reveal">Earlier chapters</h2>
+      <div class="timeline reveal reveal--stagger">
+        <div class="tl-item">
+          <time>Summer 2023</time>
+          <h3>Sales and Marketing Intern, Champion Equipment Finance</h3>
+        </div>
+        <div class="tl-item">
+          <time>2022 to 2026</time>
+          <h3>Student Support Analyst, UT Dallas OIT</h3>
+        </div>
+        <div class="tl-item">
+          <time>2022</time>
+          <h3>Code Sensei, Code Ninjas</h3>
+        </div>
+        <div class="tl-item">
+          <time>2022</time>
+          <h3>Barista, Starbucks</h3>
+        </div>
+      </div>
+    </section>
+
+    <section class="block reveal">
+      <h2>Leadership</h2>
+      <div class="cluster">
+        <div class="role">
+          <time>2022 to 2026</time>
+          <div>
+            <h3>Finance Director, Artificial Intelligence Society</h3>
+            <p class="org">UT Dallas</p>
+          </div>
+        </div>
+        <div class="role">
+          <time>2022 to 2026</time>
+          <div>
+            <h3>Speaker Series Committee, CIS-Tech Leadership Council</h3>
+            <p class="org">UT Dallas</p>
+          </div>
+        </div>
+        <div class="role">
+          <time>2024</time>
+          <div>
+            <h3>Sophomore Leadership Summit</h3>
+            <p class="org">Abercrombie &amp; Fitch</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block reveal">
+      <a class="btn btn--primary" href="resume.html">View full resume <span class="btn__icon">&rarr;</span></a>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>Nikhil Dasari</span>
+    <a href="contact.html">Contact</a>
+  </footer>
+
+  <dialog id="panel-ey" class="work-panel" aria-labelledby="panel-ey-title">
+    <button type="button" class="work-panel__close" data-panel-close aria-label="Close">&times;</button>
+    <div class="work-panel__body">
+      <section class="work-panel__hero">
+        <div class="work-panel__logo" style="background:#ffffff; border:1px solid var(--line-soft)">
+          <img src="assets/logos/ey.svg" alt="EY" style="max-width:50%; max-height:50%;">
+        </div>
+        <div>
+          <p class="meta">Summer 2025, Dallas</p>
+          <h2 id="panel-ey-title">Technology Consulting Intern, EY</h2>
+          <p>Supported an ECC to S/4HANA transformation: analyzed access controls, mitigated segregation-of-duties risk, and translated stakeholder needs into 10+ clear business requirements that guided leadership decisions.</p>
+          <span class="tag-pill">Returning full time as a Technology Consultant</span>
+        </div>
+      </section>
+      <section class="work-panel__section">
+        <h3>The work</h3>
+        <!-- TODO: replace with expanded project narrative, outcomes, screenshots -->
+        <p>Placeholder: more detail on the ECC to S/4HANA transformation, the access control analysis, and how the 10+ business requirements were gathered and used.</p>
+      </section>
+      <section class="work-panel__section">
+        <h3>Highlights</h3>
+        <div class="cluster">
+          <div class="role">
+            <time>Summer 2025</time>
+            <div>
+              <h3><!-- TODO: highlight title --></h3>
+              <p class="org">EY, Dallas</p>
+              <p>10+ business requirements translated from stakeholder needs, guiding leadership decisions.</p>
+            </div>
+          </div>
+          <!-- TODO: add more .role entries as needed -->
+        </div>
+      </section>
+    </div>
+  </dialog>
+
+  <dialog id="panel-delta" class="work-panel" aria-labelledby="panel-delta-title">
+    <button type="button" class="work-panel__close" data-panel-close aria-label="Close">&times;</button>
+    <div class="work-panel__body">
+      <section class="work-panel__hero">
+        <div class="work-panel__logo" style="background:#ffffff; border:1px solid var(--line-soft)">
+          <img src="assets/logos/delta.svg" alt="Delta Air Lines" style="max-width:70%; max-height:40%;">
+        </div>
+        <div>
+          <p class="meta">2025 to 2026, Atlanta</p>
+          <h2 id="panel-delta-title">Product Development Co-op, Delta Air Lines</h2>
+          <p>Built allotment automation for DeliverDirect in Python and VBA, scaling operations across 500+ transactions and multiple teams. Root-cause analysis in Tableau improved SLA compliance by 10% across 20+ last-mile stations.</p>
+        </div>
+      </section>
+      <section class="work-panel__section">
+        <h3>The work</h3>
+        <!-- TODO: replace with expanded project narrative, outcomes, screenshots -->
+        <p>Placeholder: more detail on the DeliverDirect allotment automation build, the Python/VBA tooling, and the Tableau root-cause analysis behind the SLA improvement.</p>
+      </section>
+      <section class="work-panel__section">
+        <h3>Highlights</h3>
+        <div class="cluster">
+          <div class="role">
+            <time>2025 to 2026</time>
+            <div>
+              <h3><!-- TODO: highlight title --></h3>
+              <p class="org">Delta Air Lines, Atlanta</p>
+              <p>Automation scaled across 500+ transactions; SLA compliance up 10% across 20+ last-mile stations.</p>
+            </div>
+          </div>
+          <!-- TODO: add more .role entries as needed -->
+        </div>
+      </section>
+    </div>
+  </dialog>
+
+  <dialog id="panel-walmart" class="work-panel" aria-labelledby="panel-walmart-title">
+    <button type="button" class="work-panel__close" data-panel-close aria-label="Close">&times;</button>
+    <div class="work-panel__body">
+      <section class="work-panel__hero">
+        <div class="work-panel__logo" style="background:#ffffff; border:1px solid var(--line-soft)">
+          <img src="assets/logos/walmart.svg" alt="Walmart" style="max-width:72%; max-height:55%;">
+        </div>
+        <div>
+          <p class="meta">Summer 2024, Bentonville</p>
+          <h2 id="panel-walmart-title">Business Operations Intern, Walmart</h2>
+          <p>Analyzed 100+ redundant assortment items with Luminate and Modular Analytics, then shipped a Power BI dashboard that improved shelf-space optimization by 20% and cut duplicative offerings by 25%.</p>
+        </div>
+      </section>
+      <section class="work-panel__section">
+        <h3>The work</h3>
+        <p>Spent the summer in Walmart's merchandising division building a dashboard that surfaced sandbox opportunities across business units. It meant pulling together large, messy datasets in Excel and Power BI, then shaping the output so decision-makers could spot new initiatives at a glance. Getting there took real cross-functional work: gathering requirements from stakeholders across departments and translating their needs into something people actually wanted to use.</p>
+        <blockquote class="work-panel__quote">"A transformative experience that not only equipped me with invaluable technical skills but also allowed me to explore new places and meet amazing people."</blockquote>
+      </section>
+      <section class="work-panel__section">
+        <h3>Highlights</h3>
+        <div class="cluster">
+          <div class="role">
+            <time>Summer 2024</time>
+            <div>
+              <h3>Sandbox Opportunities Dashboard</h3>
+              <p class="org">Walmart, Bentonville</p>
+              <p>Built in Excel and Power BI to surface innovation opportunities across divisions; improved shelf-space utilization 20%, product clarity 15%, and cut duplicative offerings 25%.</p>
+            </div>
+          </div>
+          <div class="role">
+            <time>Summer 2024</time>
+            <div>
+              <h3>Executive Exposure</h3>
+              <p class="org">Walmart, Bentonville</p>
+              <p>Met CEO Doug McMillon and other C-level leaders for a rare, direct look at corporate strategy and decision-making.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="work-panel__section">
+        <h3>Gallery</h3>
+        <div class="gallery work-panel__gallery">
+          <figure><img src="assets/walmart/headshot.webp" alt="With fellow interns in the Walmart Bentonville office" width="857" height="1000" loading="lazy"></figure>
+          <figure><img src="assets/walmart/project.webp" alt="Standing in front of the values wall at the Walmart Dallas Global Tech Center" width="1134" height="1200" loading="lazy"></figure>
+          <figure><img src="assets/walmart/professional.webp" alt="Watching a leadership talk on Walmart's strategy from the main stage" width="900" height="1200" loading="lazy"></figure>
+          <figure><img src="assets/walmart/networking.webp" alt="Taking in the view on a hike during the internship" width="900" height="1200" loading="lazy"></figure>
+          <figure><img src="assets/walmart/growth.webp" alt="Dinner with fellow interns after work" width="900" height="1200" loading="lazy"></figure>
+        </div>
+      </section>
+    </div>
+  </dialog>
+
+  <dialog id="panel-cognizant" class="work-panel" aria-labelledby="panel-cognizant-title">
+    <button type="button" class="work-panel__close" data-panel-close aria-label="Close">&times;</button>
+    <div class="work-panel__body">
+      <section class="work-panel__hero">
+        <div class="work-panel__logo" style="background:#ffffff; border:1px solid var(--line-soft)">
+          <img src="assets/logos/cognizant.svg" alt="Cognizant" style="max-width:75%; max-height:45%;">
+        </div>
+        <div>
+          <p class="meta">Summer 2024</p>
+          <h2 id="panel-cognizant-title">Generative AI Extern, Cognizant</h2>
+          <p>Designed NLP and CNN models in PyTorch, improving accuracy through transfer learning and hyperparameter tuning.</p>
+        </div>
+      </section>
+      <section class="work-panel__section">
+        <h3>The work</h3>
+        <!-- TODO: replace with expanded project narrative, outcomes, screenshots -->
+        <p>Placeholder: more detail on the NLP/CNN model design, the transfer learning approach, and the hyperparameter tuning process.</p>
+      </section>
+      <section class="work-panel__section">
+        <h3>Highlights</h3>
+        <div class="cluster">
+          <div class="role">
+            <time>Summer 2024</time>
+            <div>
+              <h3><!-- TODO: highlight title --></h3>
+              <p class="org">Cognizant</p>
+              <p>Improved model accuracy through transfer learning and hyperparameter tuning.</p>
+            </div>
+          </div>
+          <!-- TODO: add more .role entries as needed -->
+        </div>
+      </section>
+    </div>
+  </dialog>
+
+  <script src="js/site.js"></script>
+</body>
+</html>

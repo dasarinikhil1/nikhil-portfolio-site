@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact | Nikhil Dasari</title>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@700,800&f[]=satoshi@400,500,700&display=swap">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header class="site-nav">
+    <a class="site-nav__name" href="index.html">Nikhil Dasari</a>
+    <nav aria-label="Primary">
+      <ul class="site-nav__links">
+        <li><a href="index.html">Map</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="work.html">Work</a></li>
+        <li><a href="resume.html">Resume</a></li>
+        <li><a href="ugc.html">Creator</a></li>
+        <li><a href="contact.html" aria-current="page">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="page" style="max-width: 1000px;">
+
+    <section class="block" style="margin-top: clamp(3rem, 6vw, 5rem);">
+      <h1 class="rise">Light the beacon.</h1>
+      <p class="rise rise-2">Recruiting, brand collabs, or a good conversation. I reply fast.</p>
+    </section>
+
+    <section class="block reveal">
+      <div class="intent-split">
+        <div>
+          <h2>Recruiting</h2>
+          <p>Roles in consulting, product, and data. Resume and references on request.</p>
+          <p><a href="mailto:edu.nikhild@gmail.com">edu.nikhild@gmail.com</a></p>
+          <a class="btn btn--ghost" href="https://www.linkedin.com/in/dasarinikhil1/" target="_blank" rel="noopener">LinkedIn <span class="btn__icon">&rarr;</span></a>
+        </div>
+        <div>
+          <h2>Brand collabs</h2>
+          <p>Partnerships and UGC work. Media kit available.</p>
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+            <a class="btn btn--ghost" href="https://www.instagram.com/nikhy_1/" target="_blank" rel="noopener">Instagram <span class="btn__icon">&rarr;</span></a>
+            <a class="btn btn--ghost" href="https://www.tiktok.com/@nikhil.dasari" target="_blank" rel="noopener">TikTok <span class="btn__icon">&rarr;</span></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block reveal">
+      <h2>Send a message</h2>
+      <form action="#" method="post">
+        <!-- TODO: wire to a form service (Formspree / Netlify Forms) -->
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+          <span class="hint">Replies go here.</span>
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        <button class="btn btn--primary" type="submit">Send message</button>
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <span>Nikhil Dasari</span>
+    <a href="index.html">Return to Map</a>
+  </footer>
+
+  <script src="js/site.js"></script>
+</body>
+</html>
