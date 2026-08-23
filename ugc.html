@@ -48,13 +48,6 @@
     .zine-ticker span { padding: 0 2.2rem; }
 
     /* hero: airy type-led, facts up front */
-    .creator-hero {
-      min-height: 62dvh;
-      display: grid;
-      align-content: center;
-      justify-items: start;
-      padding-top: clamp(2rem, 5vw, 4rem);
-    }
     .creator-hero h1 {
       font-size: clamp(2.6rem, 6vw, 5rem);
       max-width: 14ch;
@@ -283,15 +276,19 @@
   <main class="page">
 
     <!-- hero: the agency answers, above the fold -->
-    <section class="creator-hero">
-      <h1>Content that earns its first three seconds.</h1>
-      <ul class="fact-chips">
-        <li><strong>Based in</strong> Dallas, Texas, USA</li>
-        <li><strong>Languages</strong> English, Telugu</li>
-        <li><strong>Style</strong> Hybrid: your brief, my spin</li>
-        <li><strong>Whitelisting</strong> Available</li>
-      </ul>
-      <a class="btn btn--primary" href="contact.html">Start a collab</a>
+    <section class="split-hero creator-hero">
+      <div>
+        <h1 class="rise">Content that earns its first three seconds.</h1>
+        <ul class="fact-chips rise rise-2">
+          <li><strong>Based in</strong> Dallas, Texas, USA</li>
+          <li><strong>Languages</strong> English, Telugu</li>
+          <li><strong>Style</strong> Hybrid: your brief, my spin</li>
+          <li><strong>Whitelisting</strong> Available</li>
+        </ul>
+        <a class="btn btn--primary rise rise-3" href="contact.html">Start a collab</a>
+      </div>
+      <img class="rise rise-4" src="assets/monu-amphi.webp" alt="" width="582" height="708"
+           style="max-width:360px; width:100%; height:auto; justify-self:end; filter:drop-shadow(0 24px 28px rgba(95,100,75,0.35))">
     </section>
 
     <!-- scrollytelling: three lanes of work, pinned stage -->
