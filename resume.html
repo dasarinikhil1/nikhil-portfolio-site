@@ -7,6 +7,12 @@
   <link rel="preconnect" href="https://api.fontshare.com">
   <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@700,800&f[]=satoshi@400,500,700&display=swap">
   <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* skills: compact grid instead of stacked full-width lists */
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.25rem 2rem; }
+    .skills-grid h3 { font-size: 0.95rem; margin-bottom: 0.5rem; }
+    .skills-grid .chips { margin-bottom: 0; }
+  </style>
 </head>
 <body>
 
@@ -46,19 +52,15 @@
             <h3>B.S. Information Technology Systems</h3>
             <p class="org">The University of Texas at Dallas</p>
             <p>Professional Program in IT. GPA 3.88.</p>
+            <ul class="chips" style="margin-top: 0.75rem;">
+              <li>Collegium V Honors Program</li>
+              <li>Academic Excellence Scholar</li>
+              <li>Nash Fellow</li>
+              <li>Dean's List</li>
+            </ul>
           </div>
         </div>
       </div>
-    </section>
-
-    <section class="block reveal">
-      <h2>Awards</h2>
-      <ul class="chips">
-        <li>Collegium V Honors Program</li>
-        <li>Academic Excellence Scholar</li>
-        <li>Nash Fellow</li>
-        <li>Dean's List</li>
-      </ul>
     </section>
 
     <section class="block reveal">
@@ -118,26 +120,24 @@
 
     <section class="block reveal">
       <h2>Skills</h2>
-
-      <h3>Data</h3>
-      <ul class="chips">
-        <li>SQL</li><li>Tableau</li><li>Power BI</li><li>Excel / VBA</li>
-      </ul>
-
-      <h3>Code</h3>
-      <ul class="chips">
-        <li>Python</li><li>Java</li><li>HTML</li>
-      </ul>
-
-      <h3>Platforms</h3>
-      <ul class="chips">
-        <li>SAP</li><li>Microsoft Office</li>
-      </ul>
-
-      <h3>Languages</h3>
-      <ul class="chips">
-        <li>English</li><li>Telugu</li>
-      </ul>
+      <div class="skills-grid">
+        <div>
+          <h3>Data</h3>
+          <ul class="chips"><li>SQL</li><li>Tableau</li><li>Power BI</li><li>Excel / VBA</li></ul>
+        </div>
+        <div>
+          <h3>Code</h3>
+          <ul class="chips"><li>Python</li><li>Java</li><li>HTML</li></ul>
+        </div>
+        <div>
+          <h3>Platforms</h3>
+          <ul class="chips"><li>SAP</li><li>Microsoft Office</li></ul>
+        </div>
+        <div>
+          <h3>Languages</h3>
+          <ul class="chips"><li>English</li><li>Telugu</li></ul>
+        </div>
+      </div>
     </section>
 
   </main>
